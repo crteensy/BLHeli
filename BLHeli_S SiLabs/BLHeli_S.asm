@@ -127,6 +127,7 @@ S_          	EQU 19  	; X  X  RC X  CC MA MC MB    X  X  Cc Cp Bc Bp Ac Ap   Lik
 T_			EQU 20	; RC X  MA X  MB CC MC X     X  X  Cp Bp Ap Ac Bc Cc
 U_			EQU 21	; MA MC CC MB RC L0 L1 L2    X  Cc Bc Ac Cp Bp Ap X	Like M, but with 3 LEDs
 V_			EQU 22	; Cc X  RC X  MC CC MB MA    X  Ap Ac Bp X  X  Bc Cp
+O_OD_		EQU 115	; X  X  RC X  CC MA MC MB    X  X  Cc Cp Bc Bp Ac Ap	Like O, open drain, inverted w.r.t. O
 
 ;**** **** **** **** ****
 ; Select the port mapping to use (or unselect all for use with external batch compile file)
@@ -152,6 +153,7 @@ V_			EQU 22	; Cc X  RC X  MC CC MB MA    X  Ap Ac Bp X  X  Bc Cp
 ;ESCNO EQU T_
 ;ESCNO EQU U_
 ;ESCNO EQU V_
+;ESCNO EQU O_OD_
 
 ;**** **** **** **** ****
 ; Select the MCU type (or unselect for use with external batch compile file)
@@ -250,6 +252,10 @@ ENDIF
 
 IF ESCNO == V_
 $include (V.inc)        ; Select pinout V
+ENDIF
+
+IF ESCNO == O_OD_
+$include (V.inc)        ; Select pinout O_OD
 ENDIF
 
 
@@ -2924,7 +2930,7 @@ beep_apwmfet_off:
 	jnb	ACC.0, beep_cpwmfet_off
 	CpwmFET_off		; CpwmFET off
 beep_cpwmfet_off:
-	mov	A, #150		; 25µs off
+	mov	A, #150		; 25ï¿½s off
 	djnz	ACC, $		
 	djnz	Temp2, beep_onoff
 	; Copy variable
