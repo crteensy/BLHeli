@@ -255,7 +255,7 @@ $include (V.inc)        ; Select pinout V
 ENDIF
 
 IF ESCNO == O_OD_
-$include (V.inc)        ; Select pinout O_OD
+$include (O_OD.inc)        ; Select pinout O_OD
 ENDIF
 
 

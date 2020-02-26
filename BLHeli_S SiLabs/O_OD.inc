@@ -247,7 +247,10 @@ ENDIF
 ENDIF
 ENDM
 Set_Pwm_Polarity MACRO
-	mov	PCA0POL, #00h				; Damping noninverted, pwm noninverted
+    ; this was "O":
+	;mov	PCA0POL, #00h				; Damping noninverted, pwm noninverted
+    ; inverted w.r.t. "O":
+	mov PCA0POL, #03h               ; damping inverted, pwm inverted
 ENDM
 Enable_Power_Pwm_Module MACRO
 IF FETON_DELAY == 0
@@ -326,8 +329,12 @@ AcomFET		EQU	1	;o
 ApwmFET		EQU	0	;o
 
 P1_DIGITAL	EQU	(1 SHL ApwmFET)+(1 SHL BpwmFET)+(1 SHL CpwmFET)+(1 SHL AcomFET)+(1 SHL BcomFET)+(1 SHL CcomFET)
+;this was "O":
+;P1_INIT		EQU 	(1 SHL AcomFET)+(1 SHL BcomFET)+(1 SHL CcomFET)
+;inverted w.r.t. "O":
 P1_INIT		EQU 	(1 SHL ApwmFET)+(1 SHL BpwmFET)+(1 SHL CpwmFET)
-P1_PUSHPULL	EQU	0;(1 SHL ApwmFET)+(1 SHL BpwmFET)+(1 SHL CpwmFET)+(1 SHL AcomFET)+(1 SHL BcomFET)+(1 SHL CcomFET)
+;P1_PUSHPULL	EQU	(1 SHL ApwmFET)+(1 SHL BpwmFET)+(1 SHL CpwmFET)+(1 SHL AcomFET)+(1 SHL BcomFET)+(1 SHL CcomFET)
+P1_PUSHPULL	EQU	0
 P1_SKIP		EQU	3Fh
 
 ApwmFET_on MACRO
